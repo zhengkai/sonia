@@ -1,0 +1,8 @@
+syntax = "proto3";
+option go_package = "/pb";
+package pb;
+
+message Task {
+	repeated string prompt = 1;
+	repeated string negative = 2;
+}

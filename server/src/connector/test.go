@@ -5,6 +5,6 @@ import "project/pb"
 // Test for dev
 func Test() {
 
-	o := &pb.Progress{}
+	o := &pb.ProgressReq{}
 	postJSON(``, o)
 }

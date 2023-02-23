@@ -2,7 +2,39 @@ syntax = "proto3";
 option go_package = "/pb";
 package pb;
 
-message Progress {
-	uint32 id_live_preview = 1;
+message ProgressReq {
+	sint32 id_live_preview = 1;
 	string id_task = 2;
+}
+message ProgressRsp {
+	bool active = 1;
+	bool queued = 2;
+	bool completed = 3;
+	float progress = 4;
+	float eta = 5;
+	string live_preview = 6;
+	sint32 id_live_preview = 7;
+	string textinfo = 8;
+}
+
+
+message PredictFile {
+	string data = 1;
+	string name = 3;
+	bool is_file = 2;
+}
+
+message Predict {
+	string prompt = 1;
+	string negative_prompt = 3;
+	uint32 seed = 5;
+	uint32 subseed = 7;
+	uint32 subseed_strength = 9;
+	uint32 width = 10;
+	uint32 height = 11;
+	string sampler_name = 12;
+	float cfg_scale = 13;
+	uint32 steps = 14;
+	uint32 batch_size = 15;
+	bool restore_faces = 16;
 }

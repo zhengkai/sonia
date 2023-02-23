@@ -3,7 +3,7 @@ package project
 import (
 	"project/build"
 	"project/config"
-	"project/connector"
+	"project/task"
 	"project/zj"
 	"time"
 )
@@ -15,7 +15,7 @@ func Start() {
 
 	zj.Init()
 
-	connector.Test()
+	task.Test()
 
 	time.Sleep(time.Hour)
 }
