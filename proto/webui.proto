@@ -1,0 +1,8 @@
+syntax = "proto3";
+option go_package = "/pb";
+package pb;
+
+message Progress {
+	uint32 id_live_preview = 1;
+	string id_task = 2;
+}

@@ -3,11 +3,9 @@ package project
 import (
 	"project/build"
 	"project/config"
-	"project/db"
-	"project/pb"
+	"project/connector"
 	"project/zj"
-
-	"github.com/zhengkai/zu"
+	"time"
 )
 
 // Start ...
@@ -17,14 +15,9 @@ func Start() {
 
 	zj.Init()
 
-	zj.J(zu.JSON(&pb.Demo{
-		ID:   43,
-		Name: `rpg`,
-	}))
+	connector.Test()
 
-	db.WaitConn(config.MySQL)
-
-	select {}
+	time.Sleep(time.Hour)
 }
 
 // Prod ...
