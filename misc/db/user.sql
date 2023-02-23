@@ -1,0 +1,6 @@
+CREATE USER 'sonia'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'sonia';
+GRANT USAGE ON *.* TO 'sonia'@'localhost';
+ALTER USER 'sonia'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, LOCK TABLES ON `sonia`.* TO 'sonia'@'localhost';
+ALTER USER 'sonia'@'localhost' ;
