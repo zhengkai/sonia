@@ -1,7 +1,7 @@
 Sonia: dispatcher for [Stable Diffusion web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 ======
 
-先画个饼（离能用还早）
+先画个饼（~~离能用还早~~ 好消息进度比我想的快，快能用了）
 ------
 
 可以预见 SD webui 很快就有批量跑的需求
@@ -24,3 +24,8 @@ Sonia: dispatcher for [Stable Diffusion web UI](https://github.com/AUTOMATIC1111
 有 10 个 openpose 姿势，捏了 10 个不同人物，想套用这 10 个姿势，生成 100 种图，每种跑 3 张备选
 
 有 5 个项目组各用各的 SD webui，晚上闲置，可以统一调度跑一晚上生成大量图片
+
+2023.02.24 增加个演示图可能更好理解：
+
+目前没有简单方法可以生成这类图片，这是用本程序跑出来的第一个成果
+![demo](misc/doc/img/combo.jpg)

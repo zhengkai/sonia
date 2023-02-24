@@ -25,7 +25,7 @@ func Test() {
 		for j, w := range place {
 			fmt.Println(v, w)
 
-			prompt := fmt.Sprintf(`%s, %s on %s`, commonPrompt, v, w)
+			prompt := fmt.Sprintf(`%s, ((%s)), %s on %s`, commonPrompt, v, v, w)
 
 			file := fmt.Sprintf(`output/%d_%d.png`, i, j)
 			file = util.StaticFile(file)
