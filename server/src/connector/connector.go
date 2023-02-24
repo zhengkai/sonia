@@ -8,24 +8,24 @@ import (
 // Con ...
 type Con struct {
 	id        string
-	host      string
+	server    string
 	hash      string
 	isWindows bool
 	baseDir   string
 }
 
 // NewCon ...
-func NewCon(host string) (c *Con) {
+func NewCon(server string) (c *Con) {
 	return &Con{
-		host: host,
-		id:   fmt.Sprintf(`task(%s)`, randomID(15)),
-		hash: randomID(10),
+		server: server,
+		id:     fmt.Sprintf(`task(%s)`, randomID(15)),
+		hash:   randomID(10),
 	}
 }
 
-// GetHost ...
-func (c *Con) GetHost() string {
-	return c.host
+// GetServer ...
+func (c *Con) GetServer() string {
+	return c.server
 }
 
 func randomID(length int) string {
@@ -39,5 +39,5 @@ func randomID(length int) string {
 }
 
 func (c *Con) url(path string) string {
-	return c.host + path
+	return c.server + path
 }

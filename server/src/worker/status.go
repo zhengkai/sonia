@@ -23,7 +23,7 @@ func (w *Worker) status() {
 		}
 
 		if rsp.LivePreview != `` {
-			zj.W(w.con.GetHost(), `live preview:`, len(rsp.LivePreview))
+			zj.W(w.con.GetServer(), `live preview:`, len(rsp.LivePreview))
 		}
 
 		w.active = rsp.Active

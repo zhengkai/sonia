@@ -8,6 +8,8 @@ import (
 	"project/zj"
 	"strings"
 	"time"
+
+	jp "github.com/buger/jsonparser"
 )
 
 /*
@@ -36,7 +38,10 @@ type predictReq struct {
 	SessionHash string `json:"session_hash"`
 }
 
-func (c *Con) predict(fn int, data any) (err error) {
+// PredictRsp ...
+type PredictRsp []byte
+
+func (c *Con) predict(fn int, data any) (out PredictRsp, err error) {
 
 	req := &predictReq{
 		Data:        data,
@@ -52,18 +57,17 @@ func (c *Con) predict(fn int, data any) (err error) {
 
 	ab, err = post(c.url(`/run/predict/`), ab)
 	if err != nil {
-		zj.W(err)
 		return
 	}
 
-	zj.J(`out`, len(ab))
-	util.WriteFile(`predict-out.json`, ab)
+	out = ab
 
+	util.WriteFile(`predict-out.json`, out)
 	return
 }
 
 // Predict ...
-func (c *Con) Predict(p *pb.Predict) (err error) {
+func (c *Con) Predict(p *pb.Predict) (out PredictRsp, err error) {
 
 	predictMakeupDefaultValue(p)
 
@@ -133,8 +137,7 @@ func (c *Con) Predict(p *pb.Predict) (err error) {
 		"<p></p>",
 		"<p></p>",
 	}
-	c.predict(83, d)
-	return
+	return c.predict(83, d)
 }
 
 func predictFile(seed uint32, isWindows bool, baseDir string) []*pb.PredictFile {
@@ -171,4 +174,10 @@ func predictMakeupDefaultValue(p *pb.Predict) {
 		p.Height = 512
 	}
 
+}
+
+// GetFile ...
+func (p PredictRsp) GetFile() (file string, err error) {
+	file, err = jp.GetString(p, `data`, `[0]`, `[0]`, `name`)
+	return
 }

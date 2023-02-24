@@ -3,7 +3,7 @@ package project
 import (
 	"project/build"
 	"project/config"
-	"project/task"
+	"project/mission"
 	"project/zj"
 	"time"
 )
@@ -15,7 +15,7 @@ func Start() {
 
 	zj.Init()
 
-	task.Test()
+	mission.Test()
 
 	time.Sleep(time.Hour)
 }
