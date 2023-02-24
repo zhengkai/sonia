@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"project/config"
 	"project/zj"
 	"strings"
@@ -21,6 +22,12 @@ func IsURL(s string) bool {
 	return strings.HasPrefix(s, `https://`) || strings.HasPrefix(s, `http://`)
 }
 
+// StaticFile ...
+func StaticFile(file string) string {
+	file = strings.TrimPrefix(file, config.StaticDir+`/`)
+	return fmt.Sprintf(`%s/%s`, config.StaticDir, file)
+}
+
 // ReadFile ...
 func ReadFile(file string) (ab []byte, err error) {
 	ab, err = os.ReadFile(StaticFile(file))
@@ -28,10 +35,9 @@ func ReadFile(file string) (ab []byte, err error) {
 	return
 }
 
-// StaticFile ...
-func StaticFile(file string) string {
-	file = strings.TrimPrefix(file, config.StaticDir+`/`)
-	return fmt.Sprintf(`%s/%s`, config.StaticDir, file)
+// FileExists ...
+func FileExists(file string) bool {
+	return zu.FileExists(StaticFile(file))
 }
 
 // SaveData ...
@@ -91,6 +97,14 @@ func WriteFile(file string, ab []byte) (err error) {
 	err = os.Chmod(tmpName, 0644)
 	if err != nil {
 		return
+	}
+
+	dir := path.Dir(file)
+	if !zu.FileExists(dir) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			return
+		}
 	}
 
 	err = os.Rename(tmpName, file)

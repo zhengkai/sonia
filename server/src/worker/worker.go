@@ -65,9 +65,6 @@ func (w *Worker) work(c *Cmd) (err error) {
 	if err != nil {
 		return
 	}
-
-	zj.J(f)
-	zj.J(c.FileName)
 	return
 }
 

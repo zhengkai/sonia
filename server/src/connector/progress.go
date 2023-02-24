@@ -17,7 +17,8 @@ func (c *Con) Progress(isPreview bool) (rsp *pb.ProgressRsp, err error) {
 		m.IdLivePreview = -1
 	}
 
-	ab, err := postJSON(c.url(`/internal/progress`), m)
+	url := c.url(`/internal/progress`)
+	ab, err := postJSON(url, m)
 	if err != nil {
 		return
 	}
@@ -26,6 +27,8 @@ func (c *Con) Progress(isPreview bool) (rsp *pb.ProgressRsp, err error) {
 
 	err = protojson.Unmarshal(ab, rsp)
 	if err != nil {
+		zj.J(string(ab))
+		zj.J(url)
 		zj.W(err)
 		return
 	}
