@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"project/pb"
+	"project/util"
+	"project/zj"
 	"strings"
 	"time"
 )
@@ -45,11 +47,17 @@ func (c *Con) predict(fn int, data any) (err error) {
 	if err != nil {
 		return
 	}
+	zj.J(`in`, len(ab))
+	util.WriteFile(`predict-in.json`, ab)
 
-	ab, err = post(c.url("/predict"), ab)
+	ab, err = post(c.url(`/run/predict/`), ab)
 	if err != nil {
+		zj.W(err)
 		return
 	}
+
+	zj.J(`out`, len(ab))
+	util.WriteFile(`predict-out.json`, ab)
 
 	return
 }
@@ -57,13 +65,15 @@ func (c *Con) predict(fn int, data any) (err error) {
 // Predict ...
 func (c *Con) Predict(p *pb.Predict) (err error) {
 
+	predictMakeupDefaultValue(p)
+
 	d := []any{
-		"task(5tftz7zs6pti3nn)",
+		c.id,
 		p.Prompt,
 		p.NegativePrompt,
 		[]int{},
-		20,
-		"Euler a",
+		p.Steps,
+		p.SamplerName,
 		false,
 		false,
 		1,
@@ -75,8 +85,8 @@ func (c *Con) Predict(p *pb.Predict) (err error) {
 		0,
 		0,
 		false,
-		512,
-		512,
+		p.Width,
+		p.Height,
 		false,
 		0.7,
 		2,
@@ -144,4 +154,21 @@ func predictFile(seed uint32, isWindows bool, baseDir string) []*pb.PredictFile 
 			IsFile: true,
 		},
 	}
+}
+
+func predictMakeupDefaultValue(p *pb.Predict) {
+
+	if p.SamplerName == `` {
+		p.SamplerName = `Euler a`
+	}
+	if p.Steps == 0 {
+		p.Steps = 20
+	}
+	if p.Width == 0 {
+		p.Width = 512
+	}
+	if p.Height == 0 {
+		p.Height = 512
+	}
+
 }

@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"project/zj"
 	"time"
 )
 
@@ -12,7 +13,7 @@ func (w *Worker) status() {
 		// do something
 
 		if !first {
-			time.Sleep(1)
+			time.Sleep(time.Second * 3)
 		}
 		first = false
 
@@ -21,6 +22,11 @@ func (w *Worker) status() {
 			continue
 		}
 
+		if rsp.LivePreview != `` {
+			zj.W(w.con.GetHost(), `live preview:`, len(rsp.LivePreview))
+		}
+
 		w.active = rsp.Active
+		zj.J(`active`, w.active)
 	}
 }

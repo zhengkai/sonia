@@ -1,6 +1,11 @@
 package worker
 
-import "project/connector"
+import (
+	"project/connector"
+	"project/pb"
+	"project/zj"
+	"time"
+)
 
 // Worker ...
 type Worker struct {
@@ -9,9 +14,9 @@ type Worker struct {
 }
 
 // NewWorker ...
-func NewWorker(host, baseDir string, isWindows bool) (w *Worker) {
+func NewWorker(host string) (w *Worker) {
 	w = &Worker{
-		con: connector.NewCon(host, baseDir, true),
+		con: connector.NewCon(host),
 	}
 	go w.background()
 	return
@@ -19,7 +24,25 @@ func NewWorker(host, baseDir string, isWindows bool) (w *Worker) {
 
 func (w *Worker) background() {
 
-	w.status()
+	for {
+		err := w.con.BaseDir()
+		if err == nil {
+			break
+		}
+		zj.W(w.con.GetHost(), `fetch fail`, err, `, retry after 5s...`)
+		time.Sleep(time.Second * 5)
+	}
 
+	go w.status()
+
+	w.predict()
 	// do something
+}
+
+func (w *Worker) predict() {
+	w.con.Predict(&pb.Predict{
+		Prompt: `a flying pig on the moon`,
+		Height: 1600,
+		Width:  1600,
+	})
 }

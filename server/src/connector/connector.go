@@ -15,14 +15,17 @@ type Con struct {
 }
 
 // NewCon ...
-func NewCon(host, baseDir string, isWindows bool) (c *Con) {
+func NewCon(host string) (c *Con) {
 	return &Con{
-		host:      host,
-		id:        fmt.Sprintf(`task(%s)`, randomID(15)),
-		hash:      randomID(10),
-		baseDir:   baseDir,
-		isWindows: isWindows,
+		host: host,
+		id:   fmt.Sprintf(`task(%s)`, randomID(15)),
+		hash: randomID(10),
 	}
+}
+
+// GetHost ...
+func (c *Con) GetHost() string {
+	return c.host
 }
 
 func randomID(length int) string {

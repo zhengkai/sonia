@@ -41,7 +41,7 @@ func post(url string, content []byte) (ab []byte, err error) {
 		return
 	}
 
-	ab, err = io.ReadAll(io.LimitReader(rsp.Body, 4096))
+	ab, err = io.ReadAll(io.LimitReader(rsp.Body, 1e7))
 	if err != nil {
 		metrics.ConnectorFail()
 		return

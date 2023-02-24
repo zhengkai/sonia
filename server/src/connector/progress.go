@@ -4,7 +4,6 @@ import (
 	"project/pb"
 	"project/zj"
 
-	"github.com/zhengkai/zu"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
@@ -30,8 +29,5 @@ func (c *Con) Progress(isPreview bool) (rsp *pb.ProgressRsp, err error) {
 		zj.W(err)
 		return
 	}
-
-	zj.J(string(ab))
-	zj.J(zu.JSON(rsp))
 	return
 }
