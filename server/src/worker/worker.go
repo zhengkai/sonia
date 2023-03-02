@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"project/config"
 	"project/connector"
 	"project/pb"
 	"project/zj"
@@ -12,6 +13,8 @@ type Worker struct {
 	con    *connector.Con
 	active bool
 	ch     chan *Cmd
+	prevW  uint32
+	prevH  uint32
 }
 
 // NewWorker ...
@@ -51,10 +54,21 @@ func (w *Worker) work(c *Cmd) (err error) {
 
 	defer zj.Watch(&err)
 
-	p, err := w.con.Predict(c.Predict)
+	cp := c.Predict
+	if config.HiRes {
+		if cp.Width != w.prevW || cp.Height != w.prevH {
+			w.prevW = cp.Width
+			w.prevH = cp.Height
+			ab, err := w.con.Resize(cp.Width, cp.Height, 2)
+			zj.J(`resize`, err, string(ab))
+		}
+	}
+
+	_, err = w.con.Predict(cp)
 	if err != nil {
 		return
 	}
+	return
 
 	f, err := p.GetFile()
 	if err != nil {

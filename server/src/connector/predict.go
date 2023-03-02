@@ -91,7 +91,7 @@ func (c *Con) Predict(p *pb.Predict) (out PredictRsp, err error) {
 		false,
 		p.Height,
 		p.Width,
-		false,
+		true,
 		0.7,
 		2,
 		"Latent",
@@ -137,7 +137,21 @@ func (c *Con) Predict(p *pb.Predict) (out PredictRsp, err error) {
 		"<p></p>",
 		"<p></p>",
 	}
-	return c.predict(83, d)
+	return c.predict(77, d)
+}
+
+// Resize ...
+func (c *Con) Resize(w, h uint32, rate float64) (out PredictRsp, err error) {
+
+	d := []any{
+		true,
+		w,
+		h,
+		rate,
+		0,
+		0,
+	}
+	return c.predict(64, d)
 }
 
 func predictFile(seed uint32, isWindows bool, baseDir string) []*pb.PredictFile {
