@@ -1,0 +1,10 @@
+a dog
+a cat
+a leopard
+an elephant
+a lion
+a tiger
+a giraffe
+a zebra
+a monkey
+a bear
