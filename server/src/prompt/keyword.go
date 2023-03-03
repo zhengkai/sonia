@@ -49,6 +49,9 @@ func LoadKeyword(file string) (k Keyword, err error) {
 		}
 		s = strings.TrimSpace(s)
 		s = strings.TrimRight(s, `,`)
+		if s == `` {
+			continue
+		}
 		k = append(k, s)
 	}
 	if len(k) == 0 {
