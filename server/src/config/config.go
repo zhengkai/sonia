@@ -2,11 +2,15 @@ package config
 
 // config
 var (
-	Prod bool
-	Dir  string
+	Debug bool
+	Dir   string
 
-	MySQL     = `user:pass@/dbname`
+	Width  = uint32(512)
+	Height = uint32(512)
+
 	StaticDir = `/tmp`
 
 	HiRes = false
+
+	PromptDir = ``
 )

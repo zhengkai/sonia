@@ -23,7 +23,7 @@ func Start() {
 // Prod ...
 func Prod() {
 
-	config.Prod = true
+	config.Debug = false
 
 	Start()
 }

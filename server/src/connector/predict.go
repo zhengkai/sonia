@@ -170,12 +170,11 @@ func predictMakeupDefaultValue(p *pb.Predict) {
 		p.Steps = 20
 	}
 	if p.Width == 0 {
-		p.Width = 512
+		p.Width = config.Width
 	}
 	if p.Height == 0 {
-		p.Height = 512
+		p.Height = config.Height
 	}
-
 }
 
 // GetFile ...

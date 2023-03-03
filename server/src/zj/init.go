@@ -35,7 +35,7 @@ func Init() {
 	baseLog.SetDirPrefix(filepath.Dir(zog.GetSourceFileDir()))
 
 	// 生产环境走 docker，不写本地文件
-	if !config.Prod {
+	if config.Debug {
 
 		mainFile, _ := zog.NewFile(config.Dir+`/log/default.txt`, false)
 		infoFile, _ := zog.NewFile(config.Dir+`/log/io.txt`, false)
