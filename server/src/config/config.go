@@ -10,7 +10,8 @@ var (
 
 	StaticDir = `/tmp`
 
-	HiRes = false
+	HiRes          = false
+	CopyRemoteFile = false
 
 	PromptDir = ``
 )

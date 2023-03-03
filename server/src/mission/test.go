@@ -3,7 +3,8 @@ package mission
 import (
 	"fmt"
 	"math/rand"
-	"project/pb"
+	"project/config"
+	"project/prompt"
 	"project/task"
 	"project/util"
 	"project/worker"
@@ -14,7 +15,11 @@ import (
 // Test for dev
 func Test() {
 
-	load()
+	pg, err := prompt.LoadDir(config.PromptDir)
+	if err != nil {
+		zj.W(`load prompt failed`, err)
+		return
+	}
 
 	list := []string{`http://127.0.0.1:7860`}
 
@@ -22,24 +27,12 @@ func Test() {
 
 	idx := uint32(rand.Int())
 
-	for {
+	for p := range pg.Infinity() {
 
-		prompt := ``
-		for _, v := range promptLoop {
-			_, s := v.Index(idx)
-			prompt += s
-		}
-		for _, v := range promptRand {
-			_, s := v.Rand()
-			prompt += s
-		}
-
-		idx++
-
-		zj.J(prompt)
+		zj.J(p.Prompt)
 		time.Sleep(time.Second / 5)
 
-		seed := 1
+		// seed := 1
 
 		file := fmt.Sprintf(`output/abc/%d_%d.png`, 1, idx)
 
@@ -51,10 +44,7 @@ func Test() {
 		file = util.StaticFile(file)
 
 		cmd := &worker.Cmd{
-			Predict: &pb.Predict{
-				Prompt: prompt,
-				Seed:   uint32(seed),
-			},
+			Predict:  p,
 			FileName: file,
 		}
 

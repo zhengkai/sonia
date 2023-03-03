@@ -68,16 +68,18 @@ func (w *Worker) work(c *Cmd) (err error) {
 	if err != nil {
 		return
 	}
-	return
 
-	f, err := p.GetFile()
-	if err != nil {
-		return
-	}
+	if config.CopyRemoteFile {
+		var f string
+		f, err = p.GetFile()
+		if err != nil {
+			return
+		}
 
-	_, err = w.con.Download(f, c.FileName)
-	if err != nil {
-		return
+		_, err = w.con.Download(f, c.FileName)
+		if err != nil {
+			return
+		}
 	}
 	return
 }
