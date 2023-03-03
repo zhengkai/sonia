@@ -21,7 +21,7 @@ func Test() {
 		return
 	}
 
-	list := []string{`http://127.0.0.1:7860`}
+	list := []string{config.Target}
 
 	t := task.NewTask(list)
 

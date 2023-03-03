@@ -31,4 +31,6 @@ func runIni() {
 	if h >= 256 && h <= 4096 {
 		Height = uint32(h)
 	}
+
+	Target = sec.Key(`target`).MustString(Target)
 }
