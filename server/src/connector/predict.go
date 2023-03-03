@@ -3,6 +3,7 @@ package connector
 import (
 	"encoding/json"
 	"fmt"
+	"project/config"
 	"project/pb"
 	"project/util"
 	"project/zj"
@@ -78,7 +79,7 @@ func (c *Con) Predict(p *pb.Predict) (out PredictRsp, err error) {
 		[]int{},
 		p.Steps,
 		p.SamplerName,
-		false,
+		p.RestoreFaces,
 		false,
 		1,
 		1,
@@ -91,7 +92,7 @@ func (c *Con) Predict(p *pb.Predict) (out PredictRsp, err error) {
 		false,
 		p.Height,
 		p.Width,
-		true,
+		config.HiRes,
 		0.7,
 		2,
 		"Latent",
@@ -100,19 +101,6 @@ func (c *Con) Predict(p *pb.Predict) (out PredictRsp, err error) {
 		0,
 		[]int{},
 		"None",
-		false,
-		"none",
-		"None",
-		1,
-		nil,
-		false,
-		"Scale to Fit (Inner Fit)",
-		false,
-		false,
-		64,
-		64,
-		64,
-		1,
 		false,
 		false,
 		"positive",

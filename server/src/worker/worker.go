@@ -64,7 +64,7 @@ func (w *Worker) work(c *Cmd) (err error) {
 		}
 	}
 
-	_, err = w.con.Predict(cp)
+	p, err := w.con.Predict(cp)
 	if err != nil {
 		return
 	}

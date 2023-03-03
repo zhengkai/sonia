@@ -1,6 +1,8 @@
 package mission
 
-var anmials = []string{
+import "project/util"
+
+var anmials = util.Keyword{
 	"a dog",
 	"a cat",
 	"a leopard",
@@ -13,7 +15,7 @@ var anmials = []string{
 	"a bear",
 }
 
-var place = []string{
+var place = util.Keyword{
 	"The Eiffel Tower",
 	"The Grand Canyon",
 	"The Great Wall of China",

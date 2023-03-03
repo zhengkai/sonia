@@ -8,5 +8,5 @@ var (
 	MySQL     = `user:pass@/dbname`
 	StaticDir = `/tmp`
 
-	HiRes = true
+	HiRes = false
 )

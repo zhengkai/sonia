@@ -2,6 +2,7 @@ package mission
 
 import (
 	"fmt"
+	"math/rand"
 	"project/pb"
 	"project/task"
 	"project/util"
@@ -15,37 +16,42 @@ const commonNegativePrompt = `(worst quality:2), (low quality:2), (normal qualit
 // Test for dev
 func Test() {
 
-	list := []string{`http://10.0.32.2:7860`}
+	list := []string{`http://127.0.0.1:7860`}
 
 	t := task.NewTask(list)
 
-	for i, v := range anmials {
-		for j, w := range place {
+	idx := uint32(rand.Int())
 
-			zj.J(i, j, v, w)
+	for {
 
-			seed := 1
+		i, v := anmials.Index(idx)
+		j, w := place.Index(idx)
+		idx++
 
-			prompt := fmt.Sprintf(`%s, ((%s)), %s on %s`, commonPrompt, v, v, w)
+		zj.J(idx, i, j, v, w)
 
-			file := fmt.Sprintf(`output/abc/%d_%d.png`, i, j)
+		seed := 1
 
-			if util.FileExists(file) {
-				zj.J(`skip`)
-				continue
-			}
+		prompt := fmt.Sprintf(`%s, ((%s)), %s on %s`, commonPrompt, v, v, w)
 
-			file = util.StaticFile(file)
+		file := fmt.Sprintf(`output/abc/%d_%d.png`, i, j)
 
-			cmd := &worker.Cmd{
-				Predict: &pb.Predict{
-					Prompt: prompt,
-					Seed:   uint32(seed),
-				},
-				FileName: file,
-			}
-
-			t.Do(cmd)
+		if util.FileExists(file) {
+			zj.J(`skip`)
+			continue
 		}
+
+		file = util.StaticFile(file)
+
+		cmd := &worker.Cmd{
+			Predict: &pb.Predict{
+				Prompt: prompt,
+				Seed:   uint32(seed),
+			},
+			FileName: file,
+		}
+
+		t.Do(cmd)
+		break
 	}
 }
